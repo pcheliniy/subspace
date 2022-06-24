@@ -86,3 +86,70 @@ codegen-units = 1
 # TODO: Remove once chacha20poly1305 0.10 appears in libp2p's dependencies
 chacha20poly1305 = { git = "https://github.com/RustCrypto/AEADs", rev = "06dbfb5571687fd1bbe9d3c9b2193a1ba17f8e99" }
 libp2p = { git = "https://github.com/subspace/rust-libp2p", branch = "subspace-v2" }
+
+[patch."https://github.com/subspace/substrate"]
+sc-basic-authorship = { git = "https://github.com/subspace//substrate/", branch = "debug-syncing" }
+sc-block-builder = { git = "https://github.com/subspace//substrate/", branch = "debug-syncing" }
+sc-chain-spec = { git = "https://github.com/subspace//substrate/", branch = "debug-syncing" }
+sc-cli = { git = "https://github.com/subspace//substrate/", branch = "debug-syncing" }
+sc-client-api = { git = "https://github.com/subspace//substrate/", branch = "debug-syncing" }
+sc-client-db = { git = "https://github.com/subspace//substrate/", branch = "debug-syncing" }
+sc-consensus = { git = "https://github.com/subspace//substrate/", branch = "debug-syncing" }
+sc-consensus-slots = { git = "https://github.com/subspace//substrate/", branch = "debug-syncing" }
+sc-executor = { git = "https://github.com/subspace//substrate/", branch = "debug-syncing" }
+sc-informant = { git = "https://github.com/subspace//substrate/", branch = "debug-syncing" }
+sc-keystore = { git = "https://github.com/subspace//substrate/", branch = "debug-syncing" }
+sc-network = { git = "https://github.com/subspace//substrate/", branch = "debug-syncing" }
+sc-network-common = { git = "https://github.com/subspace//substrate/", branch = "debug-syncing" }
+sc-network-gossip = { git = "https://github.com/subspace//substrate/", branch = "debug-syncing" }
+sc-offchain = { git = "https://github.com/subspace//substrate/", branch = "debug-syncing" }
+sc-rpc = { git = "https://github.com/subspace//substrate/", branch = "debug-syncing" }
+sc-rpc-api = { git = "https://github.com/subspace//substrate/", branch = "debug-syncing" }
+sc-service = { git = "https://github.com/subspace//substrate/", branch = "debug-syncing" }
+sc-telemetry = { git = "https://github.com/subspace//substrate/", branch = "debug-syncing" }
+sc-tracing = { git = "https://github.com/subspace//substrate/", branch = "debug-syncing" }
+sc-transaction-pool = { git = "https://github.com/subspace//substrate/", branch = "debug-syncing" }
+sc-transaction-pool-api = { git = "https://github.com/subspace//substrate/", branch = "debug-syncing" }
+
+sp-api = { git = "https://github.com/subspace//substrate/", branch = "debug-syncing" }
+sp-application-crypto = { git = "https://github.com/subspace//substrate/", branch = "debug-syncing" }
+sp-arithmetic = { git = "https://github.com/subspace//substrate/", branch = "debug-syncing" }
+sp-block-builder = { git = "https://github.com/subspace//substrate/", branch = "debug-syncing" }
+sp-blockchain = { git = "https://github.com/subspace//substrate/", branch = "debug-syncing" }
+sp-consensus = { git = "https://github.com/subspace//substrate/", branch = "debug-syncing" }
+sp-consensus-slots = { git = "https://github.com/subspace//substrate/", branch = "debug-syncing" }
+sp-core = { git = "https://github.com/subspace//substrate/", branch = "debug-syncing" }
+sp-externalities = { git = "https://github.com/subspace//substrate/", branch = "debug-syncing" }
+sp-inherents = { git = "https://github.com/subspace//substrate/", branch = "debug-syncing" }
+sp-io = { git = "https://github.com/subspace//substrate/", branch = "debug-syncing" }
+sp-keystore = { git = "https://github.com/subspace//substrate/", branch = "debug-syncing" }
+sp-keyring = { git = "https://github.com/subspace//substrate/", branch = "debug-syncing" }
+sp-offchain = { git = "https://github.com/subspace//substrate/", branch = "debug-syncing" }
+sp-rpc = { git = "https://github.com/subspace//substrate/", branch = "debug-syncing" }
+sp-runtime = { git = "https://github.com/subspace//substrate/", branch = "debug-syncing" }
+sp-runtime-interface = { git = "https://github.com/subspace//substrate/", branch = "debug-syncing" }
+sp-session = { git = "https://github.com/subspace//substrate/", branch = "debug-syncing" }
+sp-state-machine = { git = "https://github.com/subspace//substrate/", branch = "debug-syncing" }
+sp-std = { git = "https://github.com/subspace//substrate/", branch = "debug-syncing" }
+sp-storage = { git = "https://github.com/subspace//substrate/", branch = "debug-syncing" }
+sp-timestamp = { git = "https://github.com/subspace//substrate/", branch = "debug-syncing" }
+sp-tracing = { git = "https://github.com/subspace//substrate/", branch = "debug-syncing" }
+sp-transaction-pool = { git = "https://github.com/subspace//substrate/", branch = "debug-syncing" }
+sp-trie = { git = "https://github.com/subspace//substrate/", branch = "debug-syncing" }
+sp-version = { git = "https://github.com/subspace//substrate/", branch = "debug-syncing" }
+
+frame-benchmarking-cli = { git = "https://github.com/subspace//substrate/", branch = "debug-syncing" }
+frame-executive = { git = "https://github.com/subspace//substrate/", branch = "debug-syncing" }
+frame-support = { git = "https://github.com/subspace//substrate/", branch = "debug-syncing" }
+frame-system = { git = "https://github.com/subspace//substrate/", branch = "debug-syncing" }
+frame-system-rpc-runtime-api = { git = "https://github.com/subspace//substrate/", branch = "debug-syncing" }
+
+substrate-frame-rpc-system = { git = "https://github.com/subspace//substrate/", branch = "debug-syncing" }
+
+pallet-balances = { git = "https://github.com/subspace//substrate/", branch = "debug-syncing" }
+pallet-sudo = { git = "https://github.com/subspace//substrate/", branch = "debug-syncing" }
+pallet-timestamp = { git = "https://github.com/subspace//substrate/", branch = "debug-syncing" }
+pallet-transaction-payment = { git = "https://github.com/subspace//substrate/", branch = "debug-syncing" }
+pallet-transaction-payment-rpc = { git = "https://github.com/subspace//substrate/", branch = "debug-syncing" }
+pallet-transaction-payment-rpc-runtime-api = { git = "https://github.com/subspace//substrate/", branch = "debug-syncing" }
+pallet-utility = { git = "https://github.com/subspace//substrate/", branch = "debug-syncing" }
