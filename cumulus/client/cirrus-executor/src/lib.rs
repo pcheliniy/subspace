@@ -67,6 +67,7 @@ mod merkle_tree;
 #[cfg(test)]
 mod tests;
 mod worker;
+mod unsigned_submitter;
 
 use crate::bundle_processor::BundleProcessor;
 use crate::bundle_producer::BundleProducer;
