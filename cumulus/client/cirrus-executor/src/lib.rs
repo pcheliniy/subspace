@@ -66,8 +66,8 @@ mod fraud_proof;
 mod merkle_tree;
 #[cfg(test)]
 mod tests;
-mod worker;
 mod unsigned_submitter;
+mod worker;
 
 use crate::bundle_processor::BundleProcessor;
 use crate::bundle_producer::BundleProducer;
@@ -98,6 +98,7 @@ use sp_runtime::RuntimeAppPublic;
 use std::borrow::Cow;
 use std::sync::Arc;
 use subspace_core_primitives::{BlockNumber, Randomness, Sha256Hash};
+use unsigned_submitter::UnsignedSubmitter;
 
 /// The logging target.
 const LOG_TARGET: &str = "cirrus::executor";
@@ -116,6 +117,7 @@ where
     backend: Arc<Backend>,
     fraud_proof_generator: FraudProofGenerator<Block, Client, Backend, E>,
     bundle_processor: BundleProcessor<Block, PBlock, Client, PClient, Backend, E>,
+    unsigned_submitter: UnsignedSubmitter,
 }
 
 impl<Block, PBlock, Client, PClient, TransactionPool, Backend, E> Clone
@@ -133,6 +135,7 @@ where
             backend: self.backend.clone(),
             fraud_proof_generator: self.fraud_proof_generator.clone(),
             bundle_processor: self.bundle_processor.clone(),
+            unsigned_submitter: self.unsigned_submitter.clone(),
         }
     }
 }
@@ -223,6 +226,11 @@ where
             code_executor,
         );
 
+        let unsigned_submitter = UnsignedSubmitter::new::<Block, PBlock, PClient>(
+            primary_chain_client.clone(),
+            spawner.clone(),
+        );
+
         let bundle_processor = BundleProcessor::new(
             primary_chain_client.clone(),
             primary_network,
@@ -233,6 +241,7 @@ where
             keystore,
             spawner.clone(),
             fraud_proof_generator.clone(),
+            unsigned_submitter.clone(),
         );
 
         spawn_essential.spawn_essential_blocking(
@@ -258,6 +267,7 @@ where
             backend,
             fraud_proof_generator,
             bundle_processor,
+            unsigned_submitter,
         })
     }
 
