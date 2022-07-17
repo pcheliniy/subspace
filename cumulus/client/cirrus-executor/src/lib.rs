@@ -339,36 +339,36 @@ where
     }
 
     fn submit_bundle_equivocation_proof(&self, bundle_equivocation_proof: BundleEquivocationProof) {
-        if let Err(msg) =
-            self.unsigned_submitter
-                .try_submit(UnsignedMessage::BundleEquivocationProof(
-                    bundle_equivocation_proof,
-                ))
+        if let Err(msg) = self
+            .unsigned_submitter
+            .try_submit(UnsignedMessage::BundleEquivocation(
+                bundle_equivocation_proof,
+            ))
         {
             let mut pending_unsigned = self.pending_unsigned.lock();
-            *pending_unsigned = Some(msg);
+            pending_unsigned.replace(msg);
         }
     }
 
     fn submit_fraud_proof(&self, fraud_proof: FraudProof) {
         if let Err(msg) = self
             .unsigned_submitter
-            .try_submit(UnsignedMessage::FraudProof(fraud_proof))
+            .try_submit(UnsignedMessage::Fraud(fraud_proof))
         {
             let mut pending_unsigned = self.pending_unsigned.lock();
-            *pending_unsigned = Some(msg);
+            pending_unsigned.replace(msg);
         }
     }
 
     fn submit_invalid_transaction_proof(&self, invalid_transaction_proof: InvalidTransactionProof) {
-        if let Err(msg) =
-            self.unsigned_submitter
-                .try_submit(UnsignedMessage::InvalidTransactionProof(
-                    invalid_transaction_proof,
-                ))
+        if let Err(msg) = self
+            .unsigned_submitter
+            .try_submit(UnsignedMessage::InvalidTransaction(
+                invalid_transaction_proof,
+            ))
         {
             let mut pending_unsigned = self.pending_unsigned.lock();
-            *pending_unsigned = Some(msg);
+            pending_unsigned.replace(msg);
         }
     }
 

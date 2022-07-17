@@ -14,27 +14,27 @@ use tokio::sync::mpsc::Sender;
 const MAX_CAPACITY: usize = 256;
 
 #[derive(Debug, Clone)]
-pub enum UnsignedMessage {
-    FraudProof(FraudProof),
-    BundleEquivocationProof(BundleEquivocationProof),
-    InvalidTransactionProof(InvalidTransactionProof),
+pub(crate) enum UnsignedMessage {
+    Fraud(FraudProof),
+    BundleEquivocation(BundleEquivocationProof),
+    InvalidTransaction(InvalidTransactionProof),
 }
 
 /// Submits various executor-specific unsigned extrinsic to the primary node.
 #[derive(Clone)]
-pub struct UnsignedSubmitter {
+pub(crate) struct UnsignedSubmitter {
     sender: Sender<UnsignedMessage>,
 }
 
 impl UnsignedSubmitter {
-    pub fn new<Block, PBlock, PClient>(
+    pub(crate) fn new<Block, PBlock, PClient>(
         primary_chain_client: Arc<PClient>,
         spawner: Box<dyn SpawnNamed + Send + Sync>,
     ) -> Self
     where
         Block: BlockT,
         PBlock: BlockT,
-        PClient: HeaderBackend<PBlock> + ProvideRuntimeApi<PBlock> + Send + Sync + 'static,
+        PClient: HeaderBackend<PBlock> + ProvideRuntimeApi<PBlock> + 'static,
         PClient::Api: ExecutorApi<PBlock, Block::Hash>,
     {
         let (sender, mut receiver) = mpsc::channel(MAX_CAPACITY);
@@ -46,7 +46,7 @@ impl UnsignedSubmitter {
                 while let Some(msg) = receiver.recv().await {
                     let at = BlockId::Hash(primary_chain_client.info().best_hash);
                     match msg {
-                        UnsignedMessage::FraudProof(fraud_proof) => {
+                        UnsignedMessage::Fraud(fraud_proof) => {
                             if let Err(error) =
                                 runtime_api.submit_fraud_proof_unsigned(&at, fraud_proof)
                             {
@@ -57,7 +57,7 @@ impl UnsignedSubmitter {
                                 );
                             }
                         }
-                        UnsignedMessage::BundleEquivocationProof(bundle_equivocation_proof) => {
+                        UnsignedMessage::BundleEquivocation(bundle_equivocation_proof) => {
                             if let Err(error) = runtime_api
                                 .submit_bundle_equivocation_proof_unsigned(
                                     &at,
@@ -71,7 +71,7 @@ impl UnsignedSubmitter {
                                 );
                             }
                         }
-                        UnsignedMessage::InvalidTransactionProof(invalid_transaction_proof) => {
+                        UnsignedMessage::InvalidTransaction(invalid_transaction_proof) => {
                             if let Err(error) = runtime_api
                                 .submit_invalid_transaction_proof_unsigned(
                                     &at,
@@ -94,7 +94,7 @@ impl UnsignedSubmitter {
         Self { sender }
     }
 
-    pub fn try_submit(&self, msg: UnsignedMessage) -> Result<(), UnsignedMessage> {
+    pub(crate) fn try_submit(&self, msg: UnsignedMessage) -> Result<(), UnsignedMessage> {
         self.sender
             .try_send(msg)
             .map_err(|try_send_error| match try_send_error {

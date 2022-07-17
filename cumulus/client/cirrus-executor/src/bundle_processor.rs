@@ -654,14 +654,10 @@ where
     fn submit_fraud_proof(&self, fraud_proof: FraudProof) {
         if let Err(msg) = self
             .unsigned_submitter
-            .try_submit(UnsignedMessage::FraudProof(fraud_proof))
+            .try_submit(UnsignedMessage::Fraud(fraud_proof))
         {
-            tracing::debug!(
-                target: LOG_TARGET,
-                "Too many unsigned extrinsics, skip processing bundles"
-            );
             let mut pending_unsigned = self.pending_unsigned.lock();
-            *pending_unsigned = Some(msg);
+            pending_unsigned.replace(msg);
         }
     }
 
