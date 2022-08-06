@@ -553,7 +553,8 @@ where
 
 type NumberOf<T> = <T as HeaderT>::Number;
 
-fn derive_next_global_randomness<Header: HeaderT>(
+/// Returns the next global randomness if interval is met.
+pub fn derive_next_global_randomness<Header: HeaderT>(
     number: NumberOf<Header>,
     global_randomness_interval: NumberOf<Header>,
     pre_digest: &PreDigest<FarmerPublicKey, FarmerPublicKey>,
@@ -571,7 +572,8 @@ fn derive_next_global_randomness<Header: HeaderT>(
     .map_err(|_err| Error::NextDigestDerivationError(ErrorDigestType::GlobalRandomness))
 }
 
-fn derive_next_salt<Header: HeaderT>(
+/// Returns the next salt if eon changes.
+pub fn derive_next_salt<Header: HeaderT>(
     eon_duration: u64,
     current_eon_index: u64,
     genesis_slot: Slot,
@@ -599,7 +601,8 @@ fn derive_next_salt<Header: HeaderT>(
     Ok(None)
 }
 
-fn derive_next_solution_range<Header: HeaderT>(
+/// Returns the solution range if interval is met.
+pub fn derive_next_solution_range<Header: HeaderT>(
     number: NumberOf<Header>,
     era_duration: NumberOf<Header>,
     slot_probability: (u64, u64),
